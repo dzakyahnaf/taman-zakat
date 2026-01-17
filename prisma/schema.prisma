@@ -14,13 +14,13 @@ datasource db {
 model User {
   id        String   @id @default(uuid())
   email     String   @unique
-  password  String   // Hashed password using bcrypt
+  password  String // Hashed password using bcrypt
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  tasks         Task[]
-  activityLogs  ActivityLog[]
+  tasks        Task[]
+  activityLogs ActivityLog[]
 
   @@index([email])
 }
@@ -36,8 +36,8 @@ model Task {
   updatedAt   DateTime   @updatedAt
   userId      String
 
-  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  activityLogs  ActivityLog[]
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  activityLogs ActivityLog[]
 
   @@index([userId])
   @@index([status])
@@ -54,10 +54,10 @@ enum TaskStatus {
 // Activity log model for audit trail
 model ActivityLog {
   id        String   @id @default(uuid())
-  action    String   // CREATE, UPDATE, DELETE, LOGIN, etc.
-  entity    String   // Task, User, etc.
+  action    String // CREATE, UPDATE, DELETE, LOGIN, etc.
+  entity    String // Task, User, etc.
   entityId  String?
-  details   String?  // JSON string with additional details
+  details   String? // JSON string with additional details
   userId    String
   taskId    String?
   createdAt DateTime @default(now())
