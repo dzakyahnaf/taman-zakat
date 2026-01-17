@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model for authentication
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String   // Hashed password using bcrypt
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tasks         Task[]
+  activityLogs  ActivityLog[]
+
+  @@index([email])
+}
+
+// Task model with status and due date
+model Task {
+  id          String     @id @default(uuid())
+  title       String
+  description String?
+  status      TaskStatus @default(TODO)
+  dueDate     DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  userId      String
+
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  activityLogs  ActivityLog[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([dueDate])
+}
+
+// Enum for task status
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+// Activity log model for audit trail
+model ActivityLog {
+  id        String   @id @default(uuid())
+  action    String   // CREATE, UPDATE, DELETE, LOGIN, etc.
+  entity    String   // Task, User, etc.
+  entityId  String?
+  details   String?  // JSON string with additional details
+  userId    String
+  taskId    String?
+  createdAt DateTime @default(now())
+
+  user User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  task Task? @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+}
