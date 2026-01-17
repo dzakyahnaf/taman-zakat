@@ -29,22 +29,26 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-pink-100 px-4">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
+    <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
+      {/* Background Decor */}
+      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_-20%,#1e1f24_0%,#08090a_100%)] -z-10" />
+      <div className="absolute top-0 right-1/2 translate-x-1/2 w-[600px] h-[300px] bg-purple-500/10 blur-[120px] rounded-full -z-10" />
+
+      <div className="max-w-[400px] w-full glass-panel rounded-xl p-8 shadow-glass animate-in fade-in zoom-in-95 duration-300">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Create Account</h1>
-          <p className="text-gray-600">Get started with your task manager</p>
+          <h1 className="text-2xl font-semibold text-white mb-2 tracking-tight">Create Account</h1>
+          <p className="text-zinc-400 text-sm">Join to start managing tasks</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-5">
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+            <div className="bg-red-500/10 border border-red-500/20 text-red-200 px-4 py-3 rounded-lg text-sm">
               {error}
             </div>
           )}
 
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="name" className="block text-xs font-medium text-zinc-400 mb-1.5 uppercase tracking-wider">
               Full Name
             </label>
             <input
@@ -53,13 +57,13 @@ export default function RegisterPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition"
+              className="w-full px-4 py-2.5 rounded-lg input-linear text-sm"
               placeholder="John Doe"
             />
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="email" className="block text-xs font-medium text-zinc-400 mb-1.5 uppercase tracking-wider">
               Email
             </label>
             <input
@@ -68,13 +72,13 @@ export default function RegisterPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition"
+              className="w-full px-4 py-2.5 rounded-lg input-linear text-sm"
               placeholder="you@example.com"
             />
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="password" className="block text-xs font-medium text-zinc-400 mb-1.5 uppercase tracking-wider">
               Password
             </label>
             <input
@@ -84,25 +88,25 @@ export default function RegisterPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={6}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition"
+              className="w-full px-4 py-2.5 rounded-lg input-linear text-sm"
               placeholder="••••••••"
             />
-            <p className="text-xs text-gray-500 mt-1">Must be at least 6 characters</p>
+            <p className="text-xs text-zinc-500 mt-1">Must be at least 6 characters</p>
           </div>
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full btn-primary py-2.5 rounded-lg font-medium text-sm mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? 'Creating account...' : 'Sign Up'}
           </button>
         </form>
 
-        <div className="mt-6 text-center">
-          <p className="text-gray-600">
+        <div className="mt-8 text-center border-t border-white/5 pt-6">
+          <p className="text-zinc-500 text-sm">
             Already have an account?{' '}
-            <a href="/login" className="text-purple-600 hover:underline font-medium">
+            <a href="/login" className="text-indigo-400 hover:text-indigo-300 transition-colors">
               Sign in
             </a>
           </p>
